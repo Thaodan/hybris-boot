@@ -271,11 +271,17 @@ HYBRIS_UPDATER_UNPACK := $(LOCAL_BUILD_MODULE)
 
 .PHONY: hybris-hal hybris-common
 
-HYBRIS_COMMON_TARGETS := bootimage hybris-updater-unpack hybris-recovery hybris-boot servicemanager logcat updater init adb adbd linker libc libEGL libGLESv1_CM libGLESv2
+HYBRIS_COMMON_TARGETS := bootimage hybris-updater-unpack hybris-recovery hybris-boot servicemanager logcat updater adb adbd linker libc libEGL libGLESv1_CM libGLESv2
 ifneq ($(HYBRIS_BOOT_PART),)
 HYBRIS_COMMON_TARGETS += hybris-updater-script
 else
 $(warning Skipping build of hybris-updater-script since HYBRIS_BOOT_PART is not specified)
+endif
+
+HYBRIS_INIT_TARGETS := init
+ifeq ($(shell test $(ANDROID_VERSION_MAJOR) -ge 10 && echo true),true)
+# init is split of into early and second stage init starting with android 10
+HYBRIS_INIT_TARGETS := init_second_stage init_system init_vendor
 endif
 
 HYBRIS_COMMON_ANDROID8_TARGETS := verity_signer boot_signer e2fsdroid vendorimage ramdisk libselinux_stubs libsurfaceflinger libhwc2_compat_layer bootctl fec
@@ -289,7 +295,7 @@ else
 HYBRIS_COMMON_64_BIT_EXTRA_TARGETS = linker_32 libc_32 libEGL_32 libGLESv1_CM_32 libGLESv2_32
 endif
 
-hybris-common: $(HYBRIS_COMMON_TARGETS)
+hybris-common: $(HYBRIS_COMMON_TARGETS) $(HYBRIS_INIT)
 
 ifeq ("$(TARGET_ARCH)", "arm64")
 HYBRIS_TARGETS := $(HYBRIS_COMMON_TARGETS) $(HYBRIS_COMMON_64_BIT_EXTRA_TARGETS)
