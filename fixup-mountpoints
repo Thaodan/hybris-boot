@@ -147,7 +147,7 @@ case "$DEVICE" in
             -e 's block/bootdevice/by-name/limits sda59 ' \
             -e 's block/bootdevice/by-name/logdump sda62 ' \
             -e 's block/bootdevice/by-name/logfs sda61 ' \
-            -e 's block/bootdevice/by-name/metadata sda71 ' \
+            -e 's block/by-name/metadata sda71 ' \
             -e 's block/bootdevice/by-name/misc sda68 ' \
             -e 's block/bootdevice/by-name/modem_a sda35 ' \
             -e 's block/bootdevice/by-name/modem_b sda45 ' \
@@ -155,7 +155,7 @@ case "$DEVICE" in
             -e 's block/bootdevice/by-name/modemst2 sda65 ' \
             -e 's block/bootdevice/by-name/msadp sda57 ' \
             -e 's block/bootdevice/by-name/multiimgoem sda79 ' \
-            -e 's block/bootdevice/by-name/oem_a sda42 ' \
+            -e 's block/by-name/oem sda42 ' \
             -e 's block/bootdevice/by-name/oem_b sda52 ' \
             -e 's block/bootdevice/by-name/persist sda5 ' \
             -e 's block/bootdevice/by-name/qupfw_a sda17 ' \
